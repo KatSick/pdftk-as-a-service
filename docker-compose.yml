@@ -1,0 +1,9 @@
+version: '3.5'
+
+services:
+  pdftk-service:
+    image: katsick/pdftkgolangservice:1.0.1
+    build:
+      context: .
+    ports:
+      - '8080:80'
