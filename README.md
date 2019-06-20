@@ -2,7 +2,7 @@
 
 ## Image
 
-`docker pull katsick/pdftkgolangservice:1.0.1`
+`docker pull katsick/pdftkgolangservice:1.0.2`
 
 ## Hot to use
 
