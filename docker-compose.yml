@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   pdftk-service:
-    image: katsick/pdftkgolangservice:1.0.1
+    image: katsick/pdftkgolangservice:1.0.2
     build:
       context: .
     ports:

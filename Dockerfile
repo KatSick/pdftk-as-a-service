@@ -1,6 +1,5 @@
 FROM golang:1.12.6 as builder
 
-RUN go get -u github.com/desertbit/fillpdf
 RUN go get -u github.com/gin-gonic/gin
 
 ARG version=0.0.0

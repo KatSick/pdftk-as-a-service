@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/desertbit/fillpdf"
 	"github.com/gin-gonic/gin"
 )
 
@@ -36,7 +35,7 @@ func main() {
 			return
 		}
 
-		err = fillpdf.Fill(dynamic, tempfile, tempfilefilled, true)
+		err = Fill(dynamic, tempfile, tempfilefilled, true)
 
 		if err != nil {
 			c.Error(err)
