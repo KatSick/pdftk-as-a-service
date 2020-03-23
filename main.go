@@ -67,20 +67,8 @@ func main() {
 			fieldDataMap := make(map[string]string)
 			for _, data := range fieldData {
 				parts := strings.Split(data, ": ")
-				keyPart, err := strconv.Unquote(parts[0])
-
-				if err != nil {
-					c.Error(err)
-					return
-				}
-
-				valuePart, err := strconv.Unquote(parts[1])
-
-				if err != nil {
-					c.Error(err)
-					return
-				}
-
+				keyPart := parts[0]
+				valuePart := parts[1]
 				fieldDataMap[keyPart] = valuePart
 			}
 
@@ -101,13 +89,8 @@ func main() {
 			fields = append(fields, field)
 		}
 
-		jsonFields, err := json.Marshal(fields)
-		fmt.Println(string(jsonFields))
-
-		res := []string{"foo", "bar", string(jsonFields)}
-		c.JSON(200, res)
-	},
-	)
+		c.JSON(200, fields)
+	})
 
 	r.POST("/fill-pdf", func(c *gin.Context) {
 		file, err := c.FormFile("file")
