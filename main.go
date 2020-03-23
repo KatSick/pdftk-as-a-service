@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"os/exec"
 	"strconv"
@@ -45,7 +44,8 @@ func main() {
 		out, err := exec.Command("pdftk", args...).Output()
 
 		if err != nil {
-			println("pdftk error: " + err.Error())
+			c.Error(err)
+			return
 		}
 
 		output := string(out[:])
@@ -57,8 +57,6 @@ func main() {
 
 		var fields []Field
 		for _, pdftkField := range pdftkFields[1:] {
-			fmt.Println("This is the field")
-			fmt.Println(pdftkField)
 			fieldData := strings.Split(pdftkField, "\n")
 
 			// Remove the empty string at the end of the field data list
@@ -124,7 +122,5 @@ func main() {
 
 		c.File(tempfilefilled)
 	})
-	port := ":9092"
-	fmt.Print("Running on port " + port)
-	r.Run(port)
+	r.Run(":80")
 }
