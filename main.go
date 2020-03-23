@@ -67,24 +67,29 @@ func main() {
 			fieldDataMap := make(map[string]string)
 			for _, data := range fieldData {
 				parts := strings.Split(data, ": ")
-				fmt.Println(strings.Join(parts, "--------"))
-				fmt.Println(parts[0])
-				fmt.Println(parts[1])
-				fieldDataMap[parts[0]] = parts[1]
+				keyPart, err := strconv.Unquote(parts[0])
+
+				if err != nil {
+					c.Error(err)
+					return
+				}
+
+				valuePart, err := strconv.Unquote(parts[1])
+
+				if err != nil {
+					c.Error(err)
+					return
+				}
+
+				fieldDataMap[keyPart] = valuePart
 			}
 
-			// fmt.Println("This is the field after split")
-			// fmt.Println(fieldData)
-			// fieldType := fieldData[0]
-			// fieldName := fieldData[1]
 			fieldFlags, err := strconv.ParseFloat(fieldDataMap["FieldFlags"], 64)
 
 			if err != nil {
 				c.Error(err)
 				return
 			}
-
-			// fieldJustification := fieldData[3]
 
 			field := Field{
 				FieldType:          fieldDataMap["FieldType"],
