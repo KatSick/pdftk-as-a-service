@@ -56,7 +56,7 @@ func main() {
 		_, pdftkFields = pdftkFields[0], pdftkFields[1:]
 
 		var fields []Field
-		for _, pdftkField := range pdftkFields[1:] {
+		for _, pdftkField := range pdftkFields[0:] {
 			fieldData := strings.Split(pdftkField, "\n")
 
 			// Remove the empty string at the end of the field data list
