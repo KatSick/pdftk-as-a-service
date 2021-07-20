@@ -4,7 +4,7 @@
 
 `docker pull katsick/pdftkgolangservice:1.1.0`
 
-## Hot to use
+## How to use
 
 Invoke HTTP request to the service. Example below:
 
@@ -24,6 +24,12 @@ Content-Disposition: form-data; name="json"
 {"field1":"hello","field2":"world"}
 --2
 ```
+
+### Flatten option
+
+By default, the service flattens the PDF file (making a form non-editable). If you do 
+not want the service to flatten the file, provide the query param `flatten=false` to the `fill-pdf`
+endpoint. i.e. `POST /fill-pdf?flatten=false`
 
 ## Development
 
