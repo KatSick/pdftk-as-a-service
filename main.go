@@ -91,6 +91,13 @@ func main() {
 	})
 
 	r.POST("/fill-pdf", func(c *gin.Context) {
+		flatten_param := c.DefaultQuery("flatten", "true")
+		flatten, err := strconv.ParseBool(flatten_param)
+		if err != nil {
+			c.Error(err)
+			return
+		}
+
 		file, err := c.FormFile("file")
 
 		if err != nil {
@@ -113,7 +120,7 @@ func main() {
 			return
 		}
 
-		err = Fill(dynamic, tempfile, tempfilefilled, true)
+		err = Fill(dynamic, tempfile, tempfilefilled, true, flatten)
 
 		if err != nil {
 			c.Error(err)

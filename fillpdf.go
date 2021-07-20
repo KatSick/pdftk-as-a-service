@@ -15,8 +15,10 @@ import (
 type Form map[string]interface{}
 
 // Fill a PDF form with the specified form values and create a final filled PDF file.
-// One variadic boolean specifies, whenever to overwrite the destination file if it exists.
-func Fill(form Form, formPDFFile, destPDFFile string, overwrite ...bool) (err error) {
+// Options: 
+// - overwrite the destination file if it exists
+// - flatten the PDF file (see PDFtk documentation)
+func Fill(form Form, formPDFFile, destPDFFile string, overwrite bool, flatten bool) (err error) {
 	// Get the absolute paths.
 	formPDFFile, err = filepath.Abs(formPDFFile)
 	if err != nil {
@@ -72,8 +74,10 @@ func Fill(form Form, formPDFFile, destPDFFile string, overwrite ...bool) (err er
 		formPDFFile,
 		"fill_form", fdfFile,
 		"output", outputFile,
-		"flatten",
 	}
+	if flatten {
+		args = append(args, "flatten")
+	} 
 
 	// Run the pdftk utility.
 	err = runCommandInPath(tmpDir, "pdftk", args...)
@@ -86,7 +90,7 @@ func Fill(form Form, formPDFFile, destPDFFile string, overwrite ...bool) (err er
 	if err != nil {
 		return fmt.Errorf("failed to check if destination PDF file exists: %v", err)
 	} else if e {
-		if len(overwrite) == 0 || !overwrite[0] {
+		if !overwrite {
 			return fmt.Errorf("destination PDF file already exists: '%s'", destPDFFile)
 		}
 
